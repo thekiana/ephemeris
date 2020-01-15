@@ -9,7 +9,7 @@ export default function JournalScreen({ resetHandler }) {
   const viewRef = useRef();
 
   const handleClick = useCallback((value) => {
-    renderView({view: [ value ]});
+    renderView({ view: [value] });
     viewRef.current = value;
   });
 
@@ -19,23 +19,23 @@ export default function JournalScreen({ resetHandler }) {
         <View style={styles.container}>
           <Text style={styles.text}>Log your mood before sitting down to meditate.</Text>
           <Ionicons.Button
-            style={{justifyContent: 'center'}}
+            style={{ justifyContent: 'center' }}
             name="ios-add-circle"
             size={50}
             color='black'
             backgroundColor='transparent'
-            onPress={() => {handleClick('before')}} />
+            onPress={() => { handleClick('before') }} />
         </View>
 
         <View style={styles.container}>
           <Text style={styles.text}>Log your mood after your practice.</Text>
           <Ionicons.Button
-            style={{justifyContent: 'center'}}
+            style={{ justifyContent: 'center' }}
             name="ios-add-circle"
             size={50}
             color='black'
             backgroundColor='transparent'
-            onPress={() => {handleClick('after')}} />
+            onPress={() => { handleClick('after') }} />
         </View>
       </View>
     )

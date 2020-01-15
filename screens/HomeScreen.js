@@ -29,7 +29,7 @@ export default function HomeScreen() {
         <View style={styles.informationContainer}>
           <Description />
 
-          <Text style={styles.defaultText}>Today's practice is </Text>
+          <Text style={styles.defaultText}>Today's recommendation is </Text>
 
           <View
             style={[styles.codeHighlightContainer, styles.shadowEffectBox]}>
@@ -58,7 +58,7 @@ HomeScreen.navigationOptions = {
 function Description() {
     return (
       <Text style={styles.descriptionText}>
-        Find equanamity with your optimized meditation for today.
+        Find equanimity through your optimized meditation for today.
       </Text>
     );
 }
