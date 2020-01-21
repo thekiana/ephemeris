@@ -29,8 +29,34 @@ export default function FormScreen({ view, focused, resetHandler }) {
     };
   };
 
-  const onSubmit = (event) => {
-    Alert.alert('Submitted');
+  const onSubmitBefore = (event) => {
+    var url = 'http://127.0.0.1:3000/statsBefore';
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(event),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+    .then(res => res.json())
+    .catch(error => console.log(`Error on submit: ${error}`))
+    .then(response => console.log(`Success on submit: ${response}`));
+  }
+
+  const onSubmitAfter = (event) => {
+    var url = 'http://127.0.0.1:3000/statsAfter';
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(event),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    })
+    .then(res => res.json())
+    .catch(error => console.log(`Error on submit: ${error}`))
+    .then(response => console.log(`Success on submit: ${response}`));
   }
 
   if (view === 'before') {
@@ -56,16 +82,16 @@ export default function FormScreen({ view, focused, resetHandler }) {
           <Text style={styles.label}>Location</Text>
           <Controller as={<TextInput style={styles.input} />} control={control} name="location" onChange={onChange} defaultValue="" />
           <Text style={styles.label}>Time of Day</Text>
-          <Controller as={<TextInput style={styles.input} />} control={control} name="time-of-day" onChange={onChange} defaultValue="" />
+          <Controller as={<TextInput style={styles.input} />} control={control} name="timeOfDay" onChange={onChange} defaultValue="" />
           <Text style={styles.label}>Journal Entry</Text>
-          <Controller as={<TextInput style={styles.entry} />} control={control} multiline={true} name="journal-entry" onChange={onChange} defaultValue="" />
+          <Controller as={<TextInput style={styles.entry} />} control={control} multiline={true} name="journalEntry" onChange={onChange} defaultValue="" />
 
           <View>
             <Button
               style={styles.send}
               title="Send"
               color={focused ? Colors.tabIconDefault : Colors.tabIconSelected}
-              onPress={handleSubmit(onSubmit)} />
+              onPress={handleSubmit(onSubmitBefore)} />
           </View>
 
         </ScrollView>
@@ -94,13 +120,13 @@ export default function FormScreen({ view, focused, resetHandler }) {
           <Text style={styles.label}>Location</Text>
           <Controller as={<TextInput style={styles.input} />} control={control} name="location" onChange={onChange} defaultValue="" />
           <Text style={styles.label}>Time of Day</Text>
-          <Controller as={<TextInput style={styles.input} />} control={control} name="time-of-day" onChange={onChange} defaultValue="" />
+          <Controller as={<TextInput style={styles.input} />} control={control} name="timeOfDay" onChange={onChange} defaultValue="" />
           <Text style={styles.label}>Meditation Style</Text>
-          <Controller as={<TextInput style={styles.input} />} control={control} name="meditation-style" onChange={onChange} defaultValue="" />
+          <Controller as={<TextInput style={styles.input} />} control={control} name="meditationStyle" onChange={onChange} defaultValue="" />
           <Text style={styles.label}>Minutes Spent Meditating</Text>
-          <Controller as={<TextInput style={styles.input} />} control={control} name="minutes-spent" onChange={onChange} defaultValue="" />
+          <Controller as={<TextInput style={styles.input} />} control={control} name="minutesSpent" onChange={onChange} defaultValue="" />
           <Text style={styles.label}>Journal Entry</Text>
-          <Controller as={<TextInput style={styles.entry} />} control={control} multiline={true} name="journal-entry" onChange={onChange} defaultValue="" />
+          <Controller as={<TextInput style={styles.entry} />} control={control} multiline={true} name="journalEntry" onChange={onChange} defaultValue="" />
 
           <View>
             <Button
@@ -108,7 +134,7 @@ export default function FormScreen({ view, focused, resetHandler }) {
               title="Send"
               fontWeight="bold"
               color={focused ? Colors.tabIconDefault : Colors.tabIconSelected}
-              onPress={handleSubmit(onSubmit)} />
+              onPress={handleSubmit(onSubmitAfter)} />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
