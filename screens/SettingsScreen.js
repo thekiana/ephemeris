@@ -1,7 +1,5 @@
 import React from 'react';
 import { Image, Text, StyleSheet, ScrollView, View } from 'react-native';
-import userStats from '../userStats.js';
-import { min } from 'moment';
 
 export default class SettingsScreen extends React.Component {
 
@@ -23,7 +21,7 @@ export default class SettingsScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          formData: JSON.stringify(responseJson)
+          formData: responseJson
         });
       })
       .catch((error) => {
@@ -31,14 +29,16 @@ export default class SettingsScreen extends React.Component {
       });
   }
 
-  calcStats() {
+  calcStat() {
     var totals = 0;
     var counter = 0;
 
+    var userStats = this.state.formData;
+
     for (var i = 0; i < userStats.length; i++) {
       var stat = userStats[i];
-      if (stat.moodBefore < stat.moodAfter) {
-        let maths = (stat.moodAfter - stat.moodBefore);
+      if (stat.moodbefore < stat.moodafter) {
+        let maths = (stat.moodafter - stat.moodbefore);
         totals += maths;
         counter++;
       }
@@ -49,16 +49,18 @@ export default class SettingsScreen extends React.Component {
     return percentage;
   }
 
-  styleStats() {
+  styleStat() {
     var types = {};
+
+    var userStats = this.state.formData;
 
     for (var i = 0; i < userStats.length; i++) {
       var stat = userStats[i];
 
-      if (types[stat.meditationStyle] === undefined) {
-        types[stat.meditationStyle] = 1;
+      if (types[stat.meditationstyle] === undefined) {
+        types[stat.meditationstyle] = 1;
       } else {
-        types[stat.meditationStyle]++;
+        types[stat.meditationstyle]++;
       }
     }
 
@@ -66,61 +68,64 @@ export default class SettingsScreen extends React.Component {
     return typeList;
   }
 
-  minutesStats() {
+  minutesStat() {
     var mins = 0;
     var type = '';
     var optimal;
     var counter = 0;
 
+    var userStats = this.state.formData;
+
     for (var i = 0; i < userStats.length; i++) {
       var stat = userStats[i];
-      var style = this.styleStats();
+      var style = this.styleStat();
       var styleArr = style.split(', ');
       
-      if (styleArr[0] === stat.meditationStyle) {
-        type = stat.meditationStyle;
-        mins += stat.minutesSpent;
+      if (styleArr[0] === stat.meditationstyle) {
+        type = stat.meditationstyle;
+        mins += stat.minutesspent;
         counter++
       }
 
       optimal = mins / counter;
-      optimal = optimal + 15;
+      optimal = Math.floor(optimal);
     }
     
     return `${optimal} of ${type}`;
   }
 
   render() {
+
     return (
       <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
-        <Text style={styles.stats}>
+        <Text style={styles.stat}>
           Your overall mood enhancement:
         </Text>
 
         <View style={styles.circle}>
           <Text style={styles.statNums}>
-            {this.calcStats()}%
+            {this.calcStat()}%
           </Text>
         </View>
 
-        <Text style={styles.stats}>
+        <Text style={styles.stat}>
           Your optimal meditation styles:
         </Text>
 
-        <Text style={styles.smallStats}>
-          {this.styleStats()}
+        <Text style={styles.smallStat}>
+          {this.styleStat()}
         </Text>
 
-        <Text style={styles.stats}>
+        <Text style={styles.stat}>
           Your meditative sweet spot to guide you in entering a calm, equanimous space:
         </Text>
 
-        <Text style={styles.smallStats}>
-          {this.minutesStats()}
+        <Text style={styles.smallStat}>
+          {this.minutesStat()}
         </Text>
-        <Text style={styles.smallStats}>
+        {/* <Text style={styles.smallStat}>
           60 of Movement
-        </Text>
+        </Text> */}
       </ScrollView>
     )
   }
@@ -141,14 +146,14 @@ const styles = StyleSheet.create({
     borderWidth: 50,
     maxWidth: 300,
   },
-  stats: {
+  stat: {
     textAlign: 'center',
     fontSize: 20,
     fontFamily: 'Baskerville-BoldItalic',
     marginVertical: 30,
     marginTop: 40,
   },
-  smallStats: {
+  smallStat: {
     textAlign: 'center',
     fontSize: 20,
     fontFamily: 'Baskerville',
