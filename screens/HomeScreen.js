@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { AuthSession } from 'expo';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -50,10 +51,6 @@ export default function HomeScreen() {
     </View>
   );
 }
-
-HomeScreen.navigationOptions = {
-  header: null,
-};
 
 function Description() {
     return (
@@ -159,3 +156,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+
+HomeScreen.navigationOptions = {
+  header: null,
+};
