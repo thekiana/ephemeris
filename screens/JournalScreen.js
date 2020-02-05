@@ -20,7 +20,11 @@ export default function JournalScreen({ resetHandler }) {
           <Text style={styles.text}>Log your mood before sitting down to meditate.</Text>
           <Ionicons.Button
             style={{ justifyContent: 'center' }}
-            name="ios-add-circle"
+            name={
+              Platform.OS === 'ios'
+                ? `ios-add-circle`
+                : 'md-add-circle'
+            }
             size={50}
             color='black'
             backgroundColor='transparent'
@@ -31,7 +35,11 @@ export default function JournalScreen({ resetHandler }) {
           <Text style={styles.text}>Log your mood after your practice.</Text>
           <Ionicons.Button
             style={{ justifyContent: 'center' }}
-            name="ios-add-circle"
+            name={
+              Platform.OS === 'ios'
+                ? `ios-add-circle`
+                : 'md-add-circle'
+            }
             size={50}
             color='black'
             backgroundColor='transparent'
